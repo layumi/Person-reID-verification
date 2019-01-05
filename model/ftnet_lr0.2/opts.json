@@ -1,0 +1,12 @@
+{
+ "gpu_ids": "0",
+ "name": "ftnet_lr0.2",
+ "data_dir": "../Market/pytorch",
+ "train_all": false,
+ "color_jitter": false,
+ "batchsize": 32,
+ "lr": 0.2,
+ "erasing_p": 0,
+ "use_dense": false,
+ "PCB": false
+}

@@ -1,0 +1,10 @@
+PCB: false
+batchsize: 32
+color_jitter: false
+data_dir: ../Market/pytorch
+erasing_p: 0
+gpu_ids: '0'
+lr: 0.2
+name: ftnet_lr0.2
+train_all: false
+use_dense: false
