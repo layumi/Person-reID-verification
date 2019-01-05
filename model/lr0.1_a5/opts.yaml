@@ -1,10 +1,11 @@
 PCB: false
+alpha: 5.0
 batchsize: 32
 color_jitter: false
 data_dir: ../Market/pytorch
 erasing_p: 0
 gpu_ids: '0'
 lr: 0.1
-name: ft_ResNet50
+name: lr0.1_a5
 train_all: false
 use_dense: false

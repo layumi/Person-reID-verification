@@ -203,7 +203,6 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 _, nf = model(neg)
                 pscore = model_verif(pf * f)
                 nscore = model_verif(nf * f)
-                #print(pf.requires_grad)
                 # loss
                 # ---------------------------------
                 labels_0 = torch.zeros(now_batch_size).long()

@@ -201,6 +201,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 outputs, f = model(inputs)
                 _, pf = model(pos)
                 _, nf = model(neg)
+                pf, nf = pf.detach(), nf.detach()
                 pscore = model_verif(pf * f)
                 nscore = model_verif(nf * f)
                 #print(pf.requires_grad)

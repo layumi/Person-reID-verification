@@ -11,6 +11,7 @@ from torch.autograd import Variable
 import numpy as np
 import torchvision
 from torchvision import datasets, models, transforms
+import torch.backends.cudnn as cudnn
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
@@ -22,7 +23,7 @@ import os
 from model import ft_net, ft_net_dense, PCB, verif_net
 from random_erasing import RandomErasing
 from tripletfolder import TripletFolder
-import json
+import yaml
 from shutil import copyfile
 
 version =  torch.__version__
@@ -37,7 +38,8 @@ parser.add_argument('--data_dir',default='../Market/pytorch',type=str, help='tra
 parser.add_argument('--train_all', action='store_true', help='use all training data' )
 parser.add_argument('--color_jitter', action='store_true', help='use color jitter in training' )
 parser.add_argument('--batchsize', default=32, type=int, help='batchsize')
-parser.add_argument('--lr', default=0.1, type=float, help='margin')
+parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
+parser.add_argument('--alpha', default=1.0, type=float, help='alpha')
 parser.add_argument('--erasing_p', default=0, type=float, help='Random Erasing probability, in [0,1]')
 parser.add_argument('--use_dense', action='store_true', help='use densenet121' )
 parser.add_argument('--PCB', action='store_true', help='use PCB+ResNet50' )
@@ -55,6 +57,7 @@ for str_id in str_ids:
 # set gpu ids
 if len(gpu_ids)>0:
     torch.cuda.set_device(gpu_ids[0])
+    cudnn.benchmark = True
 #print(gpu_ids[0])
 
 
@@ -66,7 +69,8 @@ if len(gpu_ids)>0:
 transform_train_list = [
         #transforms.RandomResizedCrop(size=128, scale=(0.75,1.0), ratio=(0.75,1.3333), interpolation=3), #Image.BICUBIC)
         transforms.Resize((256,128), interpolation=3),
-        #transforms.RandomCrop((256,128)),
+        transforms.Pad(10),
+        transforms.RandomCrop((256,128)),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
@@ -171,6 +175,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 model.train(False)  # Set model to evaluate mode
 
             running_loss = 0.0
+            running_verif_loss = 0.0
             running_corrects = 0.0
             running_verif_corrects = 0.0
             # Iterate over data.
@@ -197,8 +202,8 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 outputs, f = model(inputs)
                 _, pf = model(pos)
                 _, nf = model(neg)
-                
                 pscore = model_verif(pf * f)
+                #print(pscore[0])
                 nscore = model_verif(nf * f)
                 # loss
                 # ---------------------------------
@@ -211,7 +216,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 _, p_preds = torch.max(pscore.data, 1)
                 _, n_preds = torch.max(nscore.data, 1)
                 loss_id = criterion(outputs, labels)
-                loss_verif = criterion(pscore, labels_0) + criterion(nscore , labels_1)
+                loss_verif = (criterion(pscore, labels_0) + criterion(nscore , labels_1)) * 0.5 * opt.alpha
                 loss = loss_id + loss_verif
                 # backward + optimize only if in training phase
                 if phase == 'train':
@@ -220,18 +225,21 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 # statistics
                 if int(version[0])>0 or int(version[2]) > 3: # for the new version like 0.4.0 and 0.5.0
                     running_loss += loss.item() #* opt.batchsize
+                    running_verif_loss += loss_verif.item() #* opt.batchsize
                 else :  # for the old version like 0.3.0 and 0.3.1
                     running_loss += loss.data[0] 
+                    running_verif_loss += loss_verif.data[0] 
                 running_corrects += float(torch.sum(preds == labels.data))
                 running_verif_corrects += float(torch.sum(p_preds == 0)) + float(torch.sum(n_preds == 1))
 
             datasize = dataset_sizes['train']//opt.batchsize * opt.batchsize
             epoch_loss = running_loss / datasize
+            epoch_verif_loss = running_verif_loss / datasize
             epoch_acc = running_corrects / datasize
             epoch_verif_acc = running_verif_corrects / (2*datasize)
 
-            print('{} Loss: {:.4f} Acc: {:.4f} Verif_Acc: {:.4f} '.format(
-                phase, epoch_loss, epoch_acc, epoch_verif_acc ))
+            print('{} Loss: {:.4f} Loss_verif: {:.4f}  Acc: {:.4f} Verif_Acc: {:.4f} '.format(
+                phase, epoch_loss, epoch_verif_loss, epoch_acc, epoch_verif_acc ))
             
             y_loss[phase].append(epoch_loss)
             y_err[phase].append(1.0-epoch_acc)
@@ -315,7 +323,7 @@ if not opt.PCB:
              {'params': base_params, 'lr': 0.1*opt.lr},
              {'params': model.model.fc.parameters(), 'lr': opt.lr},
              {'params': model.classifier.parameters(), 'lr': opt.lr},
-             {'params': model_verif.parameters(), 'lr': opt.lr}
+             {'params': model_verif.classifier.parameters(), 'lr': opt.lr}
          ], weight_decay=5e-4, momentum=0.9, nesterov=True)
 else:
     ignored_params = list(map(id, model.model.fc.parameters() ))
@@ -358,8 +366,8 @@ if not os.path.isdir(dir_name):
     copyfile('./tripletfolder.py', dir_name+'/tripletfolder.py')
 
 # save opts
-with open('%s/opts.json'%dir_name,'w') as fp:
-    json.dump(vars(opt), fp, indent=1)
+with open('%s/opts.yaml'%dir_name,'w') as fp:
+    yaml.dump(vars(opt), fp, default_flow_style=False)
 
 model = train_model(model, model_verif, criterion, optimizer_ft, exp_lr_scheduler,
                        num_epochs=60)

@@ -48,8 +48,8 @@ class ClassBlock(nn.Module):
     def forward(self, x):
         x = self.add_block(x)
         f = x
-        f_norm = f.norm(p=2, dim=1, keepdim=True) + 1e-8
-        f = f.div(f_norm)
+        #f_norm = f.norm(p=2, dim=1, keepdim=True) + 1e-8
+        #f = f.div(f_norm)
         x = self.classifier(x)
         return x,f
 
@@ -84,9 +84,9 @@ class ft_net(nn.Module):
 class verif_net(nn.Module):
     def __init__(self):
         super(verif_net, self).__init__()
-        self.classifier = ClassBlock(512, 2, dropout=0.5, relu=False)
+        self.classifier = ClassBlock(512, 2, dropout=0, relu=False)
     def forward(self, x):
-        x = self.classifier.classifier(x)
+        x, _ = self.classifier(x)
         return x
 
 # Define the DenseNet121-based Model
