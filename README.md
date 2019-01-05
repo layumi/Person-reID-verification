@@ -1,19 +1,19 @@
-## Person_reID_triplet-loss-baseline
+## A Discriminatively Learned CNN Embedding for Person Re-identification
 
-Baseline Code (with bottleneck) for Person-reID (pytorch).
+In this package, we provide our training and testing code written in [pytorch](https://pytorch.org/) for the paper [A Discriminatively Learned CNN Embedding for Person Re-identification] (https://arxiv.org/abs/1611.05666).
 
-We arrived **Rank@1=86.45%, mAP=70.66%** with ResNet stride=2.
-SGD optimizer is used.
+We arrived **Rank@1=xx%, mAP=xx%** with ResNet. 
 
 Any suggestion is welcomed.
 
-## Model Structure
-You may learn more from `model.py`.  We use the L2-norm 2048-dim feature as the input.
+**This code is ONLY released for academic use.**
 
-## Tips
-- Larger margin may lead to a worse local minimum. (margin = 0.1-0.3 may provide a better result.)
-- Per-class sampler (Satisfied sampler)is not neccessary. 
-- Adam optimizer is not neccessary.
+* [Weihang Chen](https://github.com/ahangchen) also realizes our paper in [Keras](https://github.com/ahangchen/rank-reid/tree/release).
+* [Xuanyi Dong](https://github.com/D-X-Y) also realizes our paper in [Caffe](https://github.com/D-X-Y/caffe-reid). 
+* [Zhun Zhong](https://github.com/zhunzhong07/IDE-baseline-Market-1501) provides a extensive [Caffe baseline code](https://github.com/zhunzhong07/IDE-baseline-Market-1501). You may check it.
+
+## Model Structure
+You may learn more from `model.py`.  
 
 ## Prerequisites
 
@@ -100,6 +100,17 @@ You may also try `evaluate_gpu.py` to conduct a faster evaluation with GPU.
 
 For mAP calculation, you also can refer to the [C++ code for Oxford Building](http://www.robots.ox.ac.uk/~vgg/data/oxbuildings/compute_ap.cpp). We use the triangle mAP calculation (consistent with the Market1501 original code).
 
+## Citation
+Please cite this paper in your publications if it helps your research:
+```
+@article{zheng2016discriminatively,
+  title={A Discriminatively Learned CNN Embedding for Person Re-identification},
+  author={Zheng, Zhedong and Zheng, Liang and Yang, Yi},
+  doi={10.1145/3159171},
+  journal={ACM Transactions on Multimedia Computing Communications and Applications},
+  year={2017}
+}
+```
 
 ## Related Repos
 1. [Pedestrian Alignment Network](https://github.com/layumi/Pedestrian_Alignment)
