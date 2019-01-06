@@ -2,12 +2,13 @@
 
 In this package, we provide our training and testing code written in [pytorch](https://pytorch.org/) for the paper [A Discriminatively Learned CNN Embedding for Person Re-identification](https://arxiv.org/abs/1611.05666).
 
-We arrived **Rank@1=xx%, mAP=xx%** with ResNet. 
-
+We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect.
+	
 Any suggestion is welcomed.
 
 **This code is ONLY released for academic use.**
 
+* [Zhedong Zheng](https://github.com/layumi) The original [Matconvnet](https://github.com/layumi/2016_person_re-ID) version in the paper.
 * [Weihang Chen](https://github.com/ahangchen) also realizes our paper in [Keras](https://github.com/ahangchen/rank-reid/tree/release).
 * [Xuanyi Dong](https://github.com/D-X-Y) also realizes our paper in [Caffe](https://github.com/D-X-Y/caffe-reid). 
 * [Zhun Zhong](https://github.com/zhunzhong07/IDE-baseline-Market-1501) provides a extensive [Caffe baseline code](https://github.com/zhunzhong07/IDE-baseline-Market-1501). You may check it.
