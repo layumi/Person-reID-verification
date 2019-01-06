@@ -247,6 +247,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
             if epoch%10 == 9:
                 save_network(model, epoch)
             draw_curve(epoch)
+            last_model_wts = model.state_dict()
 
         print()
 
