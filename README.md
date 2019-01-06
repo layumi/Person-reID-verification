@@ -1,4 +1,4 @@
-## A Discriminatively Learned CNN Embedding for Person Re-identification
+## A Discriminatively Learned CNN Embedding for Person Re-identification (in Pytorch)
 
 In this package, we provide our training and testing code written in [pytorch](https://pytorch.org/) for the paper [A Discriminatively Learned CNN Embedding for Person Re-identification](https://arxiv.org/abs/1611.05666).
 
