@@ -9,18 +9,18 @@ Compared with the original version, I do some modification:
 - I add the bottle-neck fully-connected layer for classification. I use the `512-dim` fully-connected feature as pedestrian descriptor.
 - I tune some hyperparameters. 
 
-We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. 
-Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect.
+We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. The code is largely borrowed from my another repo [strong Pytorch baseline](https://github.com/layumi/Person_reID_baseline_pytorch) .
+Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect. 
 	
 Any suggestion is welcomed.
 
 **This code is ONLY released for academic use.**
 
-* [Zhedong Zheng](https://github.com/layumi) The original [Matconvnet](https://github.com/layumi/2016_person_re-ID) version in the paper.
-* [Weihang Chen](https://github.com/ahangchen) also realizes our paper in [Keras](https://github.com/ahangchen/rank-reid/tree/release).
-* [Xuanyi Dong](https://github.com/D-X-Y) also realizes our paper in [Caffe](https://github.com/D-X-Y/caffe-reid). 
-* [Zhun Zhong](https://github.com/zhunzhong07/IDE-baseline-Market-1501) provides a extensive [Caffe baseline code](https://github.com/zhunzhong07/IDE-baseline-Market-1501). You may check it.
-* [Zhedong Zheng](https://github.com/layumi) provides a [strong Pytorch baseline](https://github.com/layumi/Person_reID_baseline_pytorch)
+* [Zhedong Zheng](https://github.com/layumi) The original [Matconvnet](https://github.com/layumi/2016_person_re-ID) version in the paper. ([![GitHub stars](https://img.shields.io/github/stars/layumi/2016_person_re-ID.svg?style=flat&label=Star)](https://github.com/layumi/2016_person_re-ID))
+* [Weihang Chen](https://github.com/ahangchen) also realizes our paper in [Keras](https://github.com/ahangchen/rank-reid/tree/release). ([![GitHub stars](https://img.shields.io/github/stars/ahangchen/rank-reid.svg?style=flat&label=Star)](https://github.com/ahangchen/rank-reid/tree/release))
+* [Xuanyi Dong](https://github.com/D-X-Y) also realizes our paper in [Caffe](https://github.com/D-X-Y/caffe-reid). ([![GitHub stars](https://img.shields.io/github/stars/D-X-Y/caffe-reid.svg?style=flat&label=Star)](https://github.com/D-X-Y/caffe-reid))
+* [Zhun Zhong](https://github.com/zhunzhong07/IDE-baseline-Market-1501) provides a extensive [Caffe baseline code](https://github.com/zhunzhong07/IDE-baseline-Market-1501). You may check it. ([![GitHub stars](https://img.shields.io/github/stars/zhunzhong07/IDE-baseline-Market-1501.svg?style=flat&label=Star)](https://github.com/zhunzhong07/IDE-baseline-Market-1501))
+* [Zhedong Zheng](https://github.com/layumi) provides a [strong Pytorch baseline](https://github.com/layumi/Person_reID_baseline_pytorch) ([![GitHub stars](https://img.shields.io/github/stars/layumi/Person_reID_baseline_pytorch.svg?style=flat&label=Star)](https://github.com/layumi/Person_reID_baseline_pytorch))
 
 ## Model Structure
 You may learn more from `model.py`.  
