@@ -9,19 +9,19 @@ def weights_init_kaiming(m):
     classname = m.__class__.__name__
     # print(classname)
     if classname.find('Conv') != -1:
-        init.kaiming_normal(m.weight.data, a=0, mode='fan_in')
+        init.kaiming_normal_(m.weight.data, a=0, mode='fan_in')
     elif classname.find('Linear') != -1:
-        init.kaiming_normal(m.weight.data, a=0, mode='fan_out')
-        init.constant(m.bias.data, 0.0)
+        init.kaiming_normal_(m.weight.data, a=0, mode='fan_out')
+        init.constant_(m.bias.data, 0.0)
     elif classname.find('BatchNorm1d') != -1:
-        init.normal(m.weight.data, 1.0, 0.02)
-        init.constant(m.bias.data, 0.0)
+        init.normal_(m.weight.data, 1.0, 0.02)
+        init.constant_(m.bias.data, 0.0)
 
 def weights_init_classifier(m):
     classname = m.__class__.__name__
     if classname.find('Linear') != -1:
-        init.normal(m.weight.data, std=0.001)
-        init.constant(m.bias.data, 0.0)
+        init.normal_(m.weight.data, std=0.001)
+        init.constant_(m.bias.data, 0.0)
 
 # Defines the new fc layer and classification layer
 # |--Linear--|--bn--|--relu--|--Linear--|
@@ -84,9 +84,9 @@ class ft_net(nn.Module):
 class verif_net(nn.Module):
     def __init__(self):
         super(verif_net, self).__init__()
-        self.classifier = ClassBlock(512, 2, dropout=0, relu=False)
+        self.classifier = ClassBlock(512, 2, dropout=0.75, relu=False)
     def forward(self, x):
-        x, _ = self.classifier(x)
+        x = self.classifier.classifier(x)
         return x
 
 # Define the DenseNet121-based Model

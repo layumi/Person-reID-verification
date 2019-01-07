@@ -84,7 +84,7 @@ class ft_net(nn.Module):
 class verif_net(nn.Module):
     def __init__(self):
         super(verif_net, self).__init__()
-        self.classifier = ClassBlock(512, 2, dropout=0.9, relu=False)
+        self.classifier = ClassBlock(512, 2, dropout=0.75, relu=False)
     def forward(self, x):
         x = self.classifier.classifier(x)
         return x

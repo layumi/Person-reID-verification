@@ -194,7 +194,6 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                     labels = Variable(labels.cuda())
                 else:
                     inputs, labels = Variable(inputs), Variable(labels)
-
                 # zero the parameter gradients
                 optimizer.zero_grad()
 
@@ -203,8 +202,8 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
                 _, pf = model(pos)
                 _, nf = model(neg)
                 pscore = model_verif(pf * f)
-                #print(pscore[0])
                 nscore = model_verif(nf * f)
+                #print(pf.requires_grad)
                 # loss
                 # ---------------------------------
                 labels_0 = torch.zeros(now_batch_size).long()
@@ -248,6 +247,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
             if epoch%10 == 9:
                 save_network(model, epoch)
             draw_curve(epoch)
+            last_model_wts = model.state_dict()
 
         print()
 
