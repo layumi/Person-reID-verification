@@ -2,7 +2,13 @@
 
 In this package, we provide our training and testing code written in [pytorch](https://pytorch.org/) for the paper [A Discriminatively Learned CNN Embedding for Person Re-identification](https://arxiv.org/abs/1611.05666).
 
-We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect.
+Compared with the original version, I do some modification:
+- I use `x*y` instead of `(x-y)^2` as `Square Layer`. (We do not need to worry about the scale of `x` and `y`.)
+- I add the bottle-neck fully-connected layer for classification. I use the `512-dim` fully-connected feature as pedestrian descriptor.
+- I tune some hyperparameters. 
+
+We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. 
+Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect.
 	
 Any suggestion is welcomed.
 
@@ -60,7 +66,7 @@ mkdir model
 ## Train
 Train a model by
 ```bash
-python train_new.py --gpu_ids 0 --name ft_ResNet50 --train_all --batchsize 32  --data_dir your_data_path
+python train_new.py --gpu_ids 0 --name ft_ResNet50 --alpha 1.0 --batchsize 32  --data_dir your_data_path
 ```
 `--gpu_ids` which gpu to run.
 
@@ -68,11 +74,11 @@ python train_new.py --gpu_ids 0 --name ft_ResNet50 --train_all --batchsize 32  -
 
 `--data_dir` the path of the training data.
 
-`--train_all` using all images to train. 
-
 `--batchsize` batch size.
 
 `--erasing_p` random erasing probability.
+
+`--alpha` the weight of the verification loss.
 
 Train a model with random erasing by
 ```bash
