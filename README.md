@@ -16,6 +16,7 @@ Any suggestion is welcomed.
 
 **This code is ONLY released for academic use.**
 
+## Resources
 * [Zhedong Zheng](https://github.com/layumi) The original [Matconvnet](https://github.com/layumi/2016_person_re-ID) version in the paper. ([![GitHub stars](https://img.shields.io/github/stars/layumi/2016_person_re-ID.svg?style=flat&label=Star)](https://github.com/layumi/2016_person_re-ID))
 * [Weihang Chen](https://github.com/ahangchen) also realizes our paper in [Keras](https://github.com/ahangchen/rank-reid/tree/release). ([![GitHub stars](https://img.shields.io/github/stars/ahangchen/rank-reid.svg?style=flat&label=Star)](https://github.com/ahangchen/rank-reid/tree/release))
 * [Xuanyi Dong](https://github.com/D-X-Y) also realizes our paper in [Caffe](https://github.com/D-X-Y/caffe-reid). ([![GitHub stars](https://img.shields.io/github/stars/D-X-Y/caffe-reid.svg?style=flat&label=Star)](https://github.com/D-X-Y/caffe-reid))
