@@ -8,6 +8,7 @@ Compared with the original version, I do some modification:
 - I use `x*y` instead of `(x-y)^2` as `Square Layer`. (We do not need to worry about the scale of `x` and `y`.)
 - I add the bottle-neck fully-connected layer for classification. I use the `512-dim` fully-connected feature as pedestrian descriptor.
 - I tune some hyperparameters. 
+- On MSMT-17, we arrive Rank@1:0.604769 Rank@5:0.761815 Rank@10:0.815593 mAP:0.315827.
 
 We arrived **Rank@1=88.66%, mAP=72.58%** with ResNet-50. The code is largely borrowed from my another repo [strong Pytorch baseline](https://github.com/layumi/Person_reID_baseline_pytorch) .
 Here we provide hyperparameters and architectures, that were used to generate the result. Some of them (i.e. learning rate) are far from optimal. Do not hesitate to change them and see the effect. 
