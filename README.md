@@ -70,7 +70,7 @@ mkdir model
 ## Train
 Train a model by
 ```bash
-python train_new.py --gpu_ids 0 --name ft_ResNet50 --alpha 1.0 --batchsize 32  --data_dir your_data_path
+python train.py --gpu_ids 0 --name ft_ResNet50 --alpha 1.0 --batchsize 32  --data_dir your_data_path --alpha 1
 ```
 `--gpu_ids` which gpu to run.
 
@@ -86,7 +86,7 @@ python train_new.py --gpu_ids 0 --name ft_ResNet50 --alpha 1.0 --batchsize 32  -
 
 Train a model with random erasing by
 ```bash
-python train_new.py --gpu_ids 0 --name ft_ResNet50 --train_all --batchsize 32  --data_dir your_data_path --erasing_p 0.5
+python train.py --gpu_ids 0 --name ft_ResNet50 --train_all --batchsize 32  --data_dir your_data_path --erasing_p 0.5 --alpha 1
 ```
 
 ## Test
