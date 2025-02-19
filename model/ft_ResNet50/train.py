@@ -169,6 +169,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
         # Each epoch has a training and validation phase
         for phase in ['train']:
             if phase == 'train':
+                scheduler.step()
                 model.train(True)  # Set model to training mode
             else:
                 model.train(False)  # Set model to evaluate mode
@@ -242,8 +243,7 @@ def train_model(model, model_verif, criterion, optimizer, scheduler, num_epochs=
             y_loss[phase].append(epoch_loss)
             y_err[phase].append(1.0-epoch_acc)
             # deep copy the model
-            if phase == 'train':
-                scheduler.step()
+
             if epoch%10 == 9:
                 save_network(model, epoch)
             draw_curve(epoch)
